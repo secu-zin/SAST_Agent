@@ -1,0 +1,26 @@
+{
+  "batch_id": "B011",
+  "dir": "interface\\vcos\\generic",
+  "tier": 2,
+  "files": [
+    "interface\\vcos\\generic\\vcos_cmd.c",
+    "interface\\vcos\\generic\\vcos_logcat.c",
+    "interface\\vcos\\generic\\vcos_generic_blockpool.c",
+    "interface\\vcos\\generic\\vcos_msgqueue.c"
+  ],
+  "raw_findings": [],
+  "verified_findings": [],
+  "token_usage": {
+    "analyzer": {
+      "input_tokens": 21126,
+      "output_tokens": 1,
+      "total_tokens": 21127
+    },
+    "verifier": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0
+    }
+  },
+  "timestamp": "2026-08-10T00:43:54.862732"
+}

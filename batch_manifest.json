@@ -1,0 +1,1321 @@
+[
+  {
+    "batch_id": "B001",
+    "dir": "opensrc\\helpers\\libfdt",
+    "tier": 1,
+    "reason": "외부 바이너리(Device Tree) 파싱",
+    "files": [
+      "opensrc\\helpers\\libfdt\\fdt_ro.c",
+      "opensrc\\helpers\\libfdt\\fdt_overlay.c",
+      "opensrc\\helpers\\libfdt\\fdt_rw.c"
+    ],
+    "lines": 2261
+  },
+  {
+    "batch_id": "B002",
+    "dir": "opensrc\\helpers\\libfdt",
+    "tier": 1,
+    "reason": "외부 바이너리(Device Tree) 파싱",
+    "files": [
+      "opensrc\\helpers\\libfdt\\fdt_sw.c",
+      "opensrc\\helpers\\libfdt\\fdt.c",
+      "opensrc\\helpers\\libfdt\\fdt_addresses.c",
+      "opensrc\\helpers\\libfdt\\fdt_wip.c",
+      "opensrc\\helpers\\libfdt\\fdt_strerror.c",
+      "opensrc\\helpers\\libfdt\\fdt_empty_tree.c"
+    ],
+    "lines": 959
+  },
+  {
+    "batch_id": "B051",
+    "dir": "host_applications\\linux\\apps\\dtoverlay",
+    "tier": 1,
+    "reason": "외부 바이너리(Device Tree) 파싱",
+    "files": [
+      "host_applications\\linux\\apps\\dtoverlay\\dtoverlay_main.c",
+      "host_applications\\linux\\apps\\dtoverlay\\utils.c"
+    ],
+    "lines": 1630
+  },
+  {
+    "batch_id": "B083",
+    "dir": "helpers\\dtoverlay",
+    "tier": 1,
+    "reason": "외부 바이너리(Device Tree) 파싱",
+    "files": [
+      "helpers\\dtoverlay\\dtoverlay.c"
+    ],
+    "lines": 2992
+  },
+  {
+    "batch_id": "B084",
+    "dir": "containers\\asf",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\asf\\asf_reader.c"
+    ],
+    "lines": 2247
+  },
+  {
+    "batch_id": "B085",
+    "dir": "containers\\asf",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\asf\\asf_writer.c"
+    ],
+    "lines": 577
+  },
+  {
+    "batch_id": "B086",
+    "dir": "containers\\avi",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\avi\\avi_reader.c"
+    ],
+    "lines": 1521
+  },
+  {
+    "batch_id": "B087",
+    "dir": "containers\\avi",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\avi\\avi_writer.c"
+    ],
+    "lines": 1171
+  },
+  {
+    "batch_id": "B088",
+    "dir": "containers\\binary",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\binary\\binary_reader.c",
+      "containers\\binary\\binary_writer.c"
+    ],
+    "lines": 427
+  },
+  {
+    "batch_id": "B089",
+    "dir": "containers\\core",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\core\\containers_uri.c",
+      "containers\\core\\containers_io.c"
+    ],
+    "lines": 2208
+  },
+  {
+    "batch_id": "B090",
+    "dir": "containers\\core",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\core\\containers.c",
+      "containers\\core\\containers_bits.c",
+      "containers\\core\\containers_loader.c",
+      "containers\\core\\containers_utils.c",
+      "containers\\core\\containers_io_helpers.c",
+      "containers\\core\\packetizers.c"
+    ],
+    "lines": 2406
+  },
+  {
+    "batch_id": "B091",
+    "dir": "containers\\core",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\core\\containers_filters.c",
+      "containers\\core\\containers_list.c",
+      "containers\\core\\containers_codecs.c",
+      "containers\\core\\containers_index.c",
+      "containers\\core\\containers_writer_utils.c",
+      "containers\\core\\containers_logging.c"
+    ],
+    "lines": 1082
+  },
+  {
+    "batch_id": "B092",
+    "dir": "containers\\dummy",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\dummy\\dummy_writer.c"
+    ],
+    "lines": 137
+  },
+  {
+    "batch_id": "B093",
+    "dir": "containers\\flash",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\flash\\flv_reader.c"
+    ],
+    "lines": 1174
+  },
+  {
+    "batch_id": "B094",
+    "dir": "containers\\h264",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\h264\\avc1_packetizer.c"
+    ],
+    "lines": 343
+  },
+  {
+    "batch_id": "B095",
+    "dir": "containers\\io",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\io\\io_file.c",
+      "containers\\io\\io_http.c",
+      "containers\\io\\io_net.c",
+      "containers\\io\\io_null.c",
+      "containers\\io\\io_pktfile.c"
+    ],
+    "lines": 1783
+  },
+  {
+    "batch_id": "B096",
+    "dir": "containers\\mkv",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\mkv\\matroska_reader.c"
+    ],
+    "lines": 2323
+  },
+  {
+    "batch_id": "B097",
+    "dir": "containers\\mp4",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\mp4\\mp4_reader.c"
+    ],
+    "lines": 1879
+  },
+  {
+    "batch_id": "B098",
+    "dir": "containers\\mp4",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\mp4\\mp4_writer.c"
+    ],
+    "lines": 1441
+  },
+  {
+    "batch_id": "B099",
+    "dir": "containers\\mpeg",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\mpeg\\ps_reader.c"
+    ],
+    "lines": 1268
+  },
+  {
+    "batch_id": "B100",
+    "dir": "containers\\mpga",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\mpga\\mpga_packetizer.c",
+      "containers\\mpga\\mpga_reader.c"
+    ],
+    "lines": 906
+  },
+  {
+    "batch_id": "B101",
+    "dir": "containers\\mpgv",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\mpgv\\mpgv_packetizer.c"
+    ],
+    "lines": 431
+  },
+  {
+    "batch_id": "B102",
+    "dir": "containers\\net",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\net\\net_sockets_bsd.c",
+      "containers\\net\\net_sockets_common.c",
+      "containers\\net\\net_sockets_null.c",
+      "containers\\net\\net_sockets_win32.c"
+    ],
+    "lines": 1051
+  },
+  {
+    "batch_id": "B103",
+    "dir": "containers\\pcm",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\pcm\\pcm_packetizer.c"
+    ],
+    "lines": 269
+  },
+  {
+    "batch_id": "B104",
+    "dir": "containers\\qsynth",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\qsynth\\qsynth_reader.c"
+    ],
+    "lines": 482
+  },
+  {
+    "batch_id": "B105",
+    "dir": "containers\\raw",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\raw\\raw_video_reader.c",
+      "containers\\raw\\raw_video_writer.c"
+    ],
+    "lines": 729
+  },
+  {
+    "batch_id": "B106",
+    "dir": "containers\\rcv",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\rcv\\rcv_reader.c"
+    ],
+    "lines": 358
+  },
+  {
+    "batch_id": "B107",
+    "dir": "containers\\rtp",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\rtp\\rtp_reader.c",
+      "containers\\rtp\\rtp_h264.c"
+    ],
+    "lines": 1961
+  },
+  {
+    "batch_id": "B108",
+    "dir": "containers\\rtp",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\rtp\\rtp_mpeg4.c",
+      "containers\\rtp\\rtp_base64.c"
+    ],
+    "lines": 953
+  },
+  {
+    "batch_id": "B109",
+    "dir": "containers\\rtsp",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\rtsp\\rtsp_reader.c"
+    ],
+    "lines": 1983
+  },
+  {
+    "batch_id": "B110",
+    "dir": "containers\\rv9",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\rv9\\rv9_reader.c"
+    ],
+    "lines": 335
+  },
+  {
+    "batch_id": "B111",
+    "dir": "containers\\simple",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\simple\\simple_reader.c",
+      "containers\\simple\\simple_writer.c"
+    ],
+    "lines": 947
+  },
+  {
+    "batch_id": "B112",
+    "dir": "containers\\test",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\test\\test_uri.c",
+      "containers\\test\\test.c",
+      "containers\\test\\test_bits.c",
+      "containers\\test\\rtp_decoder.c"
+    ],
+    "lines": 2496
+  },
+  {
+    "batch_id": "B113",
+    "dir": "containers\\test",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\test\\check_frame_int.c",
+      "containers\\test\\crc_32.c",
+      "containers\\test\\stream_server.c",
+      "containers\\test\\dump_pktfile.c",
+      "containers\\test\\stream_client.c",
+      "containers\\test\\uri_pipe.c",
+      "containers\\test\\datagram_receiver.c",
+      "containers\\test\\nb_io_unix.c",
+      "containers\\test\\datagram_sender.c",
+      "containers\\test\\nb_io_win32.c"
+    ],
+    "lines": 1421
+  },
+  {
+    "batch_id": "B114",
+    "dir": "containers\\wav",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\wav\\wav_reader.c"
+    ],
+    "lines": 366
+  },
+  {
+    "batch_id": "B115",
+    "dir": "containers\\metadata\\id3",
+    "tier": 1,
+    "reason": "외부 파일 포맷 파싱 (공격 표면 최상위)",
+    "files": [
+      "containers\\metadata\\id3\\id3_metadata_reader.c"
+    ],
+    "lines": 450
+  },
+  {
+    "batch_id": "B011",
+    "dir": "interface\\vcos\\generic",
+    "tier": 2,
+    "reason": "동시성 프리미티브 (레이스컨디션 후보)",
+    "files": [
+      "interface\\vcos\\generic\\vcos_cmd.c",
+      "interface\\vcos\\generic\\vcos_logcat.c",
+      "interface\\vcos\\generic\\vcos_generic_blockpool.c",
+      "interface\\vcos\\generic\\vcos_msgqueue.c"
+    ],
+    "lines": 2257
+  },
+  {
+    "batch_id": "B012",
+    "dir": "interface\\vcos\\generic",
+    "tier": 2,
+    "reason": "동시성 프리미티브 (레이스컨디션 후보)",
+    "files": [
+      "interface\\vcos\\generic\\vcos_generic_event_flags.c",
+      "interface\\vcos\\generic\\vcos_generic_named_sem.c",
+      "interface\\vcos\\generic\\vcos_generic_safe_string.c",
+      "interface\\vcos\\generic\\vcos_mem_from_malloc.c",
+      "interface\\vcos\\generic\\vcos_abort.c",
+      "interface\\vcos\\generic\\vcos_init.c",
+      "interface\\vcos\\generic\\vcos_generic_reentrant_mtx.c"
+    ],
+    "lines": 1054
+  },
+  {
+    "batch_id": "B013",
+    "dir": "interface\\vcos\\glibc",
+    "tier": 2,
+    "reason": "동시성 프리미티브 (레이스컨디션 후보)",
+    "files": [
+      "interface\\vcos\\glibc\\vcos_backtrace.c"
+    ],
+    "lines": 56
+  },
+  {
+    "batch_id": "B014",
+    "dir": "interface\\vcos\\pthreads",
+    "tier": 2,
+    "reason": "동시성 프리미티브 (레이스컨디션 후보)",
+    "files": [
+      "interface\\vcos\\pthreads\\vcos_dlfcn.c",
+      "interface\\vcos\\pthreads\\vcos_pthreads.c"
+    ],
+    "lines": 968
+  },
+  {
+    "batch_id": "B004",
+    "dir": "interface\\vchiq_arm",
+    "tier": 3,
+    "reason": "IPC 메시지 처리",
+    "files": [
+      "interface\\vchiq_arm\\vchiq_test.c"
+    ],
+    "lines": 1766
+  },
+  {
+    "batch_id": "B005",
+    "dir": "interface\\vchiq_arm",
+    "tier": 3,
+    "reason": "IPC 메시지 처리",
+    "files": [
+      "interface\\vchiq_arm\\vchiq_lib.c",
+      "interface\\vchiq_arm\\vchiq_util.c"
+    ],
+    "lines": 1875
+  },
+  {
+    "batch_id": "B006",
+    "dir": "interface\\vmcs_host",
+    "tier": 3,
+    "reason": "IPC 메시지 처리",
+    "files": [
+      "interface\\vmcs_host\\vc_vchi_tvservice.c"
+    ],
+    "lines": 1914
+  },
+  {
+    "batch_id": "B007",
+    "dir": "interface\\vmcs_host",
+    "tier": 3,
+    "reason": "IPC 메시지 처리",
+    "files": [
+      "interface\\vmcs_host\\vc_vchi_cecservice.c"
+    ],
+    "lines": 1365
+  },
+  {
+    "batch_id": "B008",
+    "dir": "interface\\vmcs_host",
+    "tier": 3,
+    "reason": "IPC 메시지 처리",
+    "files": [
+      "interface\\vmcs_host\\vc_vchi_dispmanx.c",
+      "interface\\vmcs_host\\vcilcs.c"
+    ],
+    "lines": 2392
+  },
+  {
+    "batch_id": "B009",
+    "dir": "interface\\vmcs_host",
+    "tier": 3,
+    "reason": "IPC 메시지 처리",
+    "files": [
+      "interface\\vmcs_host\\vcilcs_out.c",
+      "interface\\vmcs_host\\vc_vchi_gencmd.c",
+      "interface\\vmcs_host\\vcilcs_in.c",
+      "interface\\vmcs_host\\vc_vchi_gpuserv.c",
+      "interface\\vmcs_host\\vcilcs_common.c",
+      "interface\\vmcs_host\\vc_service_common.c"
+    ],
+    "lines": 2160
+  },
+  {
+    "batch_id": "B010",
+    "dir": "interface\\vmcs_host\\linux",
+    "tier": 3,
+    "reason": "IPC 메시지 처리",
+    "files": [
+      "interface\\vmcs_host\\linux\\vcmisc.c"
+    ],
+    "lines": 33
+  },
+  {
+    "batch_id": "B015",
+    "dir": "interface\\mmal\\components",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\components\\container_reader.c",
+      "interface\\mmal\\components\\clock.c"
+    ],
+    "lines": 1900
+  },
+  {
+    "batch_id": "B016",
+    "dir": "interface\\mmal\\components",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\components\\avcodec_audio_decoder.c",
+      "interface\\mmal\\components\\avcodec_video_decoder.c",
+      "interface\\mmal\\components\\spdif.c",
+      "interface\\mmal\\components\\scheduler.c"
+    ],
+    "lines": 2174
+  },
+  {
+    "batch_id": "B017",
+    "dir": "interface\\mmal\\components",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\components\\sdl_video_render.c",
+      "interface\\mmal\\components\\splitter.c",
+      "interface\\mmal\\components\\copy.c",
+      "interface\\mmal\\components\\artificial_camera.c",
+      "interface\\mmal\\components\\passthrough.c",
+      "interface\\mmal\\components\\sdl_audio_render.c",
+      "interface\\mmal\\components\\aggregator.c",
+      "interface\\mmal\\components\\null_sink.c"
+    ],
+    "lines": 2228
+  },
+  {
+    "batch_id": "B018",
+    "dir": "interface\\mmal\\core",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\core\\mmal_port.c",
+      "interface\\mmal\\core\\mmal_clock.c"
+    ],
+    "lines": 2401
+  },
+  {
+    "batch_id": "B019",
+    "dir": "interface\\mmal\\core",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\core\\mmal_port_clock.c",
+      "interface\\mmal\\core\\mmal_component.c",
+      "interface\\mmal\\core\\mmal_pool.c",
+      "interface\\mmal\\core\\mmal_queue.c",
+      "interface\\mmal\\core\\mmal_buffer.c",
+      "interface\\mmal\\core\\mmal_format.c"
+    ],
+    "lines": 2465
+  },
+  {
+    "batch_id": "B020",
+    "dir": "interface\\mmal\\core",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\core\\mmal_events.c",
+      "interface\\mmal\\core\\mmal_logging.c"
+    ],
+    "lines": 181
+  },
+  {
+    "batch_id": "B021",
+    "dir": "interface\\mmal\\openmaxil",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\openmaxil\\mmalomx_core.c",
+      "interface\\mmal\\openmaxil\\mmalomx_parameters.c"
+    ],
+    "lines": 2155
+  },
+  {
+    "batch_id": "B022",
+    "dir": "interface\\mmal\\openmaxil",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\openmaxil\\mmalomx_util_params_camera.c",
+      "interface\\mmal\\openmaxil\\mmalomx_commands.c",
+      "interface\\mmal\\openmaxil\\mmalomx_util_params_video.c",
+      "interface\\mmal\\openmaxil\\mmalomx_buffer.c",
+      "interface\\mmal\\openmaxil\\mmalomx_roles.c",
+      "interface\\mmal\\openmaxil\\mmalomx_util_params.c",
+      "interface\\mmal\\openmaxil\\mmalomx_logging.c",
+      "interface\\mmal\\openmaxil\\mmalomx_registry.c",
+      "interface\\mmal\\openmaxil\\mmalomx_util_params_misc.c"
+    ],
+    "lines": 2426
+  },
+  {
+    "batch_id": "B023",
+    "dir": "interface\\mmal\\openmaxil",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\openmaxil\\mmalomx_marks.c",
+      "interface\\mmal\\openmaxil\\mmalomx_util_params_audio.c"
+    ],
+    "lines": 135
+  },
+  {
+    "batch_id": "B024",
+    "dir": "interface\\mmal\\util",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\util\\mmal_graph.c"
+    ],
+    "lines": 1560
+  },
+  {
+    "batch_id": "B025",
+    "dir": "interface\\mmal\\util",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\util\\mmal_il.c",
+      "interface\\mmal\\util\\mmal_connection.c",
+      "interface\\mmal\\util\\mmal_util.c",
+      "interface\\mmal\\util\\mmal_component_wrapper.c"
+    ],
+    "lines": 2491
+  },
+  {
+    "batch_id": "B026",
+    "dir": "interface\\mmal\\util",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\util\\mmal_util_params.c",
+      "interface\\mmal\\util\\mmal_list.c",
+      "interface\\mmal\\util\\mmal_param_convert.c",
+      "interface\\mmal\\util\\mmal_util_rational.c"
+    ],
+    "lines": 778
+  },
+  {
+    "batch_id": "B027",
+    "dir": "interface\\mmal\\vc",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\vc\\mmal_vc_api.c",
+      "interface\\mmal\\vc\\mmal_vc_diag.c"
+    ],
+    "lines": 2400
+  },
+  {
+    "batch_id": "B028",
+    "dir": "interface\\mmal\\vc",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\vc\\mmal_vc_client.c",
+      "interface\\mmal\\vc\\mmal_vc_shm.c",
+      "interface\\mmal\\vc\\mmal_vc_opaque_alloc.c",
+      "interface\\mmal\\vc\\mmal_vc_msgnames.c",
+      "interface\\mmal\\vc\\mmal_vc_api_drm.c"
+    ],
+    "lines": 1354
+  },
+  {
+    "batch_id": "B029",
+    "dir": "interface\\mmal\\test\\examples",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\test\\examples\\example_basic_1.c",
+      "interface\\mmal\\test\\examples\\example_basic_2.c",
+      "interface\\mmal\\test\\examples\\example_connections.c",
+      "interface\\mmal\\test\\examples\\example_graph.c"
+    ],
+    "lines": 910
+  },
+  {
+    "batch_id": "B030",
+    "dir": "interface\\mmal\\client\\brcmjpeg",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "interface\\mmal\\client\\brcmjpeg\\brcmjpeg.c",
+      "interface\\mmal\\client\\brcmjpeg\\brcmjpeg_test.c"
+    ],
+    "lines": 1150
+  },
+  {
+    "batch_id": "B045",
+    "dir": "host_applications\\vmcs\\test_apps\\mmalcam",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "host_applications\\vmcs\\test_apps\\mmalcam\\mmalcam.c",
+      "host_applications\\vmcs\\test_apps\\mmalcam\\viewfinder.c"
+    ],
+    "lines": 1778
+  },
+  {
+    "batch_id": "B046",
+    "dir": "host_applications\\vmcs\\test_apps\\mmalplay",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "host_applications\\vmcs\\test_apps\\mmalplay\\mmalplay.c",
+      "host_applications\\vmcs\\test_apps\\mmalplay\\playback.c"
+    ],
+    "lines": 1761
+  },
+  {
+    "batch_id": "B070",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\hello_mmal_encode",
+    "tier": 4,
+    "reason": "미디어 파이프라인 버퍼 관리",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\hello_mmal_encode\\mmal_encode.c"
+    ],
+    "lines": 261
+  },
+  {
+    "batch_id": "B053",
+    "dir": "host_applications\\linux\\apps\\raspicam",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\raspicam\\RaspiVid.c"
+    ],
+    "lines": 2962
+  },
+  {
+    "batch_id": "B054",
+    "dir": "host_applications\\linux\\apps\\raspicam",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\raspicam\\RaspiStill.c"
+    ],
+    "lines": 2073
+  },
+  {
+    "batch_id": "B055",
+    "dir": "host_applications\\linux\\apps\\raspicam",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\raspicam\\RaspiCamControl.c"
+    ],
+    "lines": 1844
+  },
+  {
+    "batch_id": "B056",
+    "dir": "host_applications\\linux\\apps\\raspicam",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\raspicam\\RaspiVidYUV.c"
+    ],
+    "lines": 1520
+  },
+  {
+    "batch_id": "B057",
+    "dir": "host_applications\\linux\\apps\\raspicam",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\raspicam\\RaspiStillYUV.c",
+      "host_applications\\linux\\apps\\raspicam\\RaspiTex.c"
+    ],
+    "lines": 2140
+  },
+  {
+    "batch_id": "B058",
+    "dir": "host_applications\\linux\\apps\\raspicam",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\raspicam\\RaspiTexUtil.c",
+      "host_applications\\linux\\apps\\raspicam\\RaspiHelpers.c",
+      "host_applications\\linux\\apps\\raspicam\\RaspiPreview.c",
+      "host_applications\\linux\\apps\\raspicam\\RaspiGPS.c",
+      "host_applications\\linux\\apps\\raspicam\\RaspiTexStub.c",
+      "host_applications\\linux\\apps\\raspicam\\RaspiCommonSettings.c",
+      "host_applications\\linux\\apps\\raspicam\\libgps_loader.c",
+      "host_applications\\linux\\apps\\raspicam\\RaspiCLI.c",
+      "host_applications\\linux\\apps\\raspicam\\tga.c"
+    ],
+    "lines": 2372
+  },
+  {
+    "batch_id": "B062",
+    "dir": "host_applications\\linux\\apps\\raspicam\\gl_scenes",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\raspicam\\gl_scenes\\mirror.c",
+      "host_applications\\linux\\apps\\raspicam\\gl_scenes\\models.c",
+      "host_applications\\linux\\apps\\raspicam\\gl_scenes\\sobel.c",
+      "host_applications\\linux\\apps\\raspicam\\gl_scenes\\square.c",
+      "host_applications\\linux\\apps\\raspicam\\gl_scenes\\teapot.c",
+      "host_applications\\linux\\apps\\raspicam\\gl_scenes\\vcsm_square.c",
+      "host_applications\\linux\\apps\\raspicam\\gl_scenes\\yuv.c"
+    ],
+    "lines": 1766
+  },
+  {
+    "batch_id": "B063",
+    "dir": "host_applications\\linux\\apps\\raspicam\\imv_examples",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\raspicam\\imv_examples\\imv2pgm.c",
+      "host_applications\\linux\\apps\\raspicam\\imv_examples\\imv2txt.c"
+    ],
+    "lines": 174
+  },
+  {
+    "batch_id": "B064",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\hello_audio",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\hello_audio\\audio.c",
+      "host_applications\\linux\\apps\\hello_pi\\hello_audio\\sinewave.c"
+    ],
+    "lines": 586
+  },
+  {
+    "batch_id": "B065",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\hello_dispmanx",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\hello_dispmanx\\dispmanx.c"
+    ],
+    "lines": 163
+  },
+  {
+    "batch_id": "B066",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\hello_encode",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\hello_encode\\encode.c"
+    ],
+    "lines": 315
+  },
+  {
+    "batch_id": "B067",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\hello_fft",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\hello_fft\\gpu_fft.c",
+      "host_applications\\linux\\apps\\hello_pi\\hello_fft\\gpu_fft_base.c",
+      "host_applications\\linux\\apps\\hello_pi\\hello_fft\\gpu_fft_shaders.c",
+      "host_applications\\linux\\apps\\hello_pi\\hello_fft\\gpu_fft_trans.c",
+      "host_applications\\linux\\apps\\hello_pi\\hello_fft\\gpu_fft_twiddles.c",
+      "host_applications\\linux\\apps\\hello_pi\\hello_fft\\hello_fft.c",
+      "host_applications\\linux\\apps\\hello_pi\\hello_fft\\hello_fft_2d.c",
+      "host_applications\\linux\\apps\\hello_pi\\hello_fft\\mailbox.c"
+    ],
+    "lines": 1345
+  },
+  {
+    "batch_id": "B068",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\hello_font",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\hello_font\\main.c"
+    ],
+    "lines": 146
+  },
+  {
+    "batch_id": "B069",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\hello_jpeg",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\hello_jpeg\\jpeg.c"
+    ],
+    "lines": 696
+  },
+  {
+    "batch_id": "B071",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\hello_teapot",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\hello_teapot\\models.c",
+      "host_applications\\linux\\apps\\hello_pi\\hello_teapot\\triangle.c",
+      "host_applications\\linux\\apps\\hello_pi\\hello_teapot\\video.c"
+    ],
+    "lines": 1303
+  },
+  {
+    "batch_id": "B072",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\hello_tiger",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\hello_tiger\\main.c",
+      "host_applications\\linux\\apps\\hello_pi\\hello_tiger\\tiger.c"
+    ],
+    "lines": 2494
+  },
+  {
+    "batch_id": "B073",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\hello_triangle",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\hello_triangle\\triangle.c"
+    ],
+    "lines": 559
+  },
+  {
+    "batch_id": "B074",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\hello_triangle2",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\hello_triangle2\\triangle2.c"
+    ],
+    "lines": 520
+  },
+  {
+    "batch_id": "B075",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\hello_video",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\hello_video\\video.c"
+    ],
+    "lines": 222
+  },
+  {
+    "batch_id": "B076",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\hello_videocube",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\hello_videocube\\triangle.c",
+      "host_applications\\linux\\apps\\hello_pi\\hello_videocube\\video.c"
+    ],
+    "lines": 800
+  },
+  {
+    "batch_id": "B077",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\hello_world",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\hello_world\\world.c"
+    ],
+    "lines": 36
+  },
+  {
+    "batch_id": "B078",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\libs\\ilclient",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\libs\\ilclient\\ilclient.c",
+      "host_applications\\linux\\apps\\hello_pi\\libs\\ilclient\\ilcore.c"
+    ],
+    "lines": 2144
+  },
+  {
+    "batch_id": "B079",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\libs\\revision",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\libs\\revision\\revision.c"
+    ],
+    "lines": 128
+  },
+  {
+    "batch_id": "B080",
+    "dir": "host_applications\\linux\\apps\\hello_pi\\libs\\vgfont",
+    "tier": 5,
+    "reason": "사용자 입력 처리 앱",
+    "files": [
+      "host_applications\\linux\\apps\\hello_pi\\libs\\vgfont\\font.c",
+      "host_applications\\linux\\apps\\hello_pi\\libs\\vgfont\\graphics.c",
+      "host_applications\\linux\\apps\\hello_pi\\libs\\vgfont\\vgft.c"
+    ],
+    "lines": 2387
+  },
+  {
+    "batch_id": "B031",
+    "dir": "interface\\khronos\\common",
+    "tier": 6,
+    "reason": "GPU client 직렬화 stub",
+    "files": [
+      "interface\\khronos\\common\\khrn_client.c",
+      "interface\\khronos\\common\\khrn_client_cache.c",
+      "interface\\khronos\\common\\khrn_int_generic_map.c",
+      "interface\\khronos\\common\\khrn_int_hash.c",
+      "interface\\khronos\\common\\khrn_int_image.c",
+      "interface\\khronos\\common\\khrn_int_util.c",
+      "interface\\khronos\\common\\khrn_client_cr.c",
+      "interface\\khronos\\common\\khrn_options.c",
+      "interface\\khronos\\common\\khrn_client_vector.c",
+      "interface\\khronos\\common\\khrn_client_global_image_map.c"
+    ],
+    "lines": 2482
+  },
+  {
+    "batch_id": "B032",
+    "dir": "interface\\khronos\\common",
+    "tier": 6,
+    "reason": "GPU client 직렬화 stub",
+    "files": [
+      "interface\\khronos\\common\\khrn_client_pointermap.c"
+    ],
+    "lines": 37
+  },
+  {
+    "batch_id": "B033",
+    "dir": "interface\\khronos\\egl",
+    "tier": 6,
+    "reason": "GPU client 직렬화 stub",
+    "files": [
+      "interface\\khronos\\egl\\egl_client.c"
+    ],
+    "lines": 2511
+  },
+  {
+    "batch_id": "B034",
+    "dir": "interface\\khronos\\egl",
+    "tier": 6,
+    "reason": "GPU client 직렬화 stub",
+    "files": [
+      "interface\\khronos\\egl\\egl_client_surface.c",
+      "interface\\khronos\\egl\\egl_client_config_cr.c",
+      "interface\\khronos\\egl\\egl_client_cr.c"
+    ],
+    "lines": 2273
+  },
+  {
+    "batch_id": "B035",
+    "dir": "interface\\khronos\\egl",
+    "tier": 6,
+    "reason": "GPU client 직렬화 stub",
+    "files": [
+      "interface\\khronos\\egl\\egl_client_config.c",
+      "interface\\khronos\\egl\\egl_client_context.c",
+      "interface\\khronos\\egl\\egl_client_get_proc.c"
+    ],
+    "lines": 1013
+  },
+  {
+    "batch_id": "B036",
+    "dir": "interface\\khronos\\ext",
+    "tier": 6,
+    "reason": "GPU client 직렬화 stub",
+    "files": [
+      "interface\\khronos\\ext\\egl_khr_image_client.c",
+      "interface\\khronos\\ext\\egl_khr_sync_client.c",
+      "interface\\khronos\\ext\\egl_brcm_global_image_client.c",
+      "interface\\khronos\\ext\\gl_oes_map_buffer.c",
+      "interface\\khronos\\ext\\egl_khr_lock_surface_client.c",
+      "interface\\khronos\\ext\\gl_oes_egl_image_client.c",
+      "interface\\khronos\\ext\\egl_brcm_perf_monitor_client.c",
+      "interface\\khronos\\ext\\egl_brcm_driver_monitor_client.c",
+      "interface\\khronos\\ext\\gl_oes_framebuffer_object.c",
+      "interface\\khronos\\ext\\gl_oes_matrix_palette_client.c",
+      "interface\\khronos\\ext\\gl_oes_draw_texture_client.c",
+      "interface\\khronos\\ext\\ext_gl_debug_marker.c",
+      "interface\\khronos\\ext\\gl_oes_query_matrix_client.c"
+    ],
+    "lines": 2482
+  },
+  {
+    "batch_id": "B037",
+    "dir": "interface\\khronos\\ext",
+    "tier": 6,
+    "reason": "GPU client 직렬화 stub",
+    "files": [
+      "interface\\khronos\\ext\\egl_brcm_flush_client.c",
+      "interface\\khronos\\ext\\egl_openmaxil_client.c"
+    ],
+    "lines": 95
+  },
+  {
+    "batch_id": "B038",
+    "dir": "interface\\khronos\\glxx",
+    "tier": 6,
+    "reason": "GPU client 직렬화 stub",
+    "files": [
+      "interface\\khronos\\glxx\\glxx_client.c"
+    ],
+    "lines": 5734
+  },
+  {
+    "batch_id": "B039",
+    "dir": "interface\\khronos\\vg",
+    "tier": 6,
+    "reason": "GPU client 직렬화 stub",
+    "files": [
+      "interface\\khronos\\vg\\vg_client.c"
+    ],
+    "lines": 5666
+  },
+  {
+    "batch_id": "B040",
+    "dir": "interface\\khronos\\vg",
+    "tier": 6,
+    "reason": "GPU client 직렬화 stub",
+    "files": [
+      "interface\\khronos\\vg\\vg_int_mat3x3.c"
+    ],
+    "lines": 646
+  },
+  {
+    "batch_id": "B041",
+    "dir": "interface\\khronos\\wf",
+    "tier": 6,
+    "reason": "GPU client 직렬화 stub",
+    "files": [
+      "interface\\khronos\\wf\\wfc_client.c"
+    ],
+    "lines": 2597
+  },
+  {
+    "batch_id": "B042",
+    "dir": "interface\\khronos\\wf",
+    "tier": 6,
+    "reason": "GPU client 직렬화 stub",
+    "files": [
+      "interface\\khronos\\wf\\wfc_client_stream.c",
+      "interface\\khronos\\wf\\wfc_client_server_api.c",
+      "interface\\khronos\\wf\\wfc_client_ipc.c"
+    ],
+    "lines": 2237
+  },
+  {
+    "batch_id": "B043",
+    "dir": "interface\\khronos\\common\\linux",
+    "tier": 6,
+    "reason": "GPU client 직렬화 stub",
+    "files": [
+      "interface\\khronos\\common\\linux\\khrn_client_platform_linux.c",
+      "interface\\khronos\\common\\linux\\khrn_client_rpc_linux.c"
+    ],
+    "lines": 1357
+  },
+  {
+    "batch_id": "B044",
+    "dir": "interface\\khronos\\common\\openwfc",
+    "tier": 6,
+    "reason": "GPU client 직렬화 stub",
+    "files": [
+      "interface\\khronos\\common\\openwfc\\khrn_client_platform_openwfc.c"
+    ],
+    "lines": 328
+  },
+  {
+    "batch_id": "B003",
+    "dir": "makefiles\\cmake\\srcs",
+    "tier": 9,
+    "reason": "기타",
+    "files": [
+      "makefiles\\cmake\\srcs\\test-mtrace.c"
+    ],
+    "lines": 35
+  },
+  {
+    "batch_id": "B047",
+    "dir": "host_applications\\linux\\libs\\bcm_host",
+    "tier": 9,
+    "reason": "기타",
+    "files": [
+      "host_applications\\linux\\libs\\bcm_host\\bcm_host.c"
+    ],
+    "lines": 318
+  },
+  {
+    "batch_id": "B048",
+    "dir": "host_applications\\linux\\libs\\debug_sym",
+    "tier": 9,
+    "reason": "기타",
+    "files": [
+      "host_applications\\linux\\libs\\debug_sym\\debug_sym.c"
+    ],
+    "lines": 891
+  },
+  {
+    "batch_id": "B049",
+    "dir": "host_applications\\linux\\libs\\sm",
+    "tier": 9,
+    "reason": "기타",
+    "files": [
+      "host_applications\\linux\\libs\\sm\\user-vcsm.c"
+    ],
+    "lines": 2416
+  },
+  {
+    "batch_id": "B050",
+    "dir": "host_applications\\linux\\apps\\dtmerge",
+    "tier": 9,
+    "reason": "기타",
+    "files": [
+      "host_applications\\linux\\apps\\dtmerge\\dtmerge.c"
+    ],
+    "lines": 222
+  },
+  {
+    "batch_id": "B052",
+    "dir": "host_applications\\linux\\apps\\gencmd",
+    "tier": 9,
+    "reason": "기타",
+    "files": [
+      "host_applications\\linux\\apps\\gencmd\\gencmd.c"
+    ],
+    "lines": 280
+  },
+  {
+    "batch_id": "B059",
+    "dir": "host_applications\\linux\\apps\\smem",
+    "tier": 9,
+    "reason": "기타",
+    "files": [
+      "host_applications\\linux\\apps\\smem\\smem.c"
+    ],
+    "lines": 449
+  },
+  {
+    "batch_id": "B060",
+    "dir": "host_applications\\linux\\apps\\tvservice",
+    "tier": 9,
+    "reason": "기타",
+    "files": [
+      "host_applications\\linux\\apps\\tvservice\\tvservice.c"
+    ],
+    "lines": 1287
+  },
+  {
+    "batch_id": "B061",
+    "dir": "host_applications\\linux\\apps\\vcmailbox",
+    "tier": 9,
+    "reason": "기타",
+    "files": [
+      "host_applications\\linux\\apps\\vcmailbox\\vcmailbox.c"
+    ],
+    "lines": 107
+  },
+  {
+    "batch_id": "B081",
+    "dir": "host_applications\\framework\\common",
+    "tier": 9,
+    "reason": "기타",
+    "files": [
+      "host_applications\\framework\\common\\ilcore.c"
+    ],
+    "lines": 353
+  },
+  {
+    "batch_id": "B082",
+    "dir": "host_applications\\android\\apps\\vidtex",
+    "tier": 9,
+    "reason": "기타",
+    "files": [
+      "host_applications\\android\\apps\\vidtex\\launcher_rpi.c",
+      "host_applications\\android\\apps\\vidtex\\main.c",
+      "host_applications\\android\\apps\\vidtex\\svp.c",
+      "host_applications\\android\\apps\\vidtex\\vidtex.c"
+    ],
+    "lines": 1394
+  }
+]
