@@ -151,18 +151,29 @@ client = genai.Client()  # picks up GEMINI_API_KEY from the environment
 
 def run_cppcheck(files):
     """Run cppcheck on a list of file paths (relative to REPO_ROOT).
-    Cppcheck writes its XML report to stderr, not stdout."""
+    Cppcheck writes its XML report to stderr, not stdout.
+    Returns (xml_text, status) where status distinguishes a real scan
+    from a failed one -- see report.md 14.6 for why this distinction
+    matters (a failure that looks like "0 hits" is a safety problem)."""
     cmd = [CPPCHECK_EXE, "--enable=warning,portability,performance",
            "--xml", "--xml-version=2"] + files
     try:
         result = subprocess.run(cmd, cwd=REPO_ROOT, capture_output=True,
                                  text=True, encoding="utf-8", errors="ignore",
                                  timeout=120)
-        return result.stderr
+        # cppcheck returns 0 on a clean run even with findings; nonzero
+        # generally means a real execution problem (bad args, crash, etc.),
+        # not "the code has issues". Surface that distinction instead of
+        # silently treating stderr as valid hint XML either way.
+        if result.returncode != 0:
+            return (result.stderr, "CPPCHECK_NONZERO_EXIT")
+        return (result.stderr, "OK")
     except FileNotFoundError:
-        return "<!-- cppcheck not found at CPPCHECK_EXE, skipping rule-engine pre-filter -->"
+        return ("<!-- cppcheck not found at CPPCHECK_EXE, skipping rule-engine pre-filter -->",
+                "CPPCHECK_NOT_FOUND")
     except subprocess.TimeoutExpired:
-        return "<!-- cppcheck timed out, skipping rule-engine pre-filter -->"
+        return ("<!-- cppcheck timed out, skipping rule-engine pre-filter -->",
+                "CPPCHECK_TIMEOUT")
 
 
 def read_batch_code(batch):
@@ -302,7 +313,9 @@ def extract_json(text):
 def process_batch(batch):
     print(f"\n=== {batch['batch_id']}  ({batch['dir']}, tier {batch['tier']}) ===")
 
-    cppcheck_xml = run_cppcheck(batch["files"])
+    cppcheck_xml, cppcheck_status = run_cppcheck(batch["files"])
+    if cppcheck_status != "OK":
+        print(f"  [WARN] Cppcheck did not complete normally: {cppcheck_status}")
     code = read_batch_code(batch)
 
     analyzer_input = (
@@ -375,6 +388,7 @@ def process_batch(batch):
         "tier": batch["tier"],
         "files": batch["files"],
         "status": status,
+        "cppcheck_status": cppcheck_status,
         "raw_findings": findings,
         "verified_findings": verified,
         "token_usage": {"analyzer": analyzer_tokens, "verifier": verifier_tokens},
@@ -407,6 +421,18 @@ def main():
             total_tokens += result["token_usage"]["analyzer"].get("total_tokens") or 0
             total_tokens += result["token_usage"]["verifier"].get("total_tokens") or 0
             out_path = OUTPUT_DIR / f"{batch['batch_id']}.json"
+            # FIX (post-review, see report.md §14.7): the previous behavior
+            # silently overwrote any prior run's output for this batch_id,
+            # which is exactly how Run A's original findings disappeared
+            # from agent_results/ before the run_A/run_B/manual_ground_truth
+            # restructuring. Back up an existing file before replacing it
+            # instead of relying on the operator to remember to move it.
+            if out_path.exists():
+                backup_path = out_path.with_name(
+                    f"{batch['batch_id']}.prev-{datetime.now().strftime('%Y%m%dT%H%M%S')}.json"
+                )
+                out_path.replace(backup_path)
+                print(f"  [INFO] Existing {out_path.name} backed up to {backup_path.name}")
             out_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
             n_confirmed = sum(1 for f in result["verified_findings"]
                                if isinstance(f, dict) and f.get("verifier_status") == "CONFIRMED")
