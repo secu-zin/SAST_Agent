@@ -315,7 +315,11 @@ def process_batch(batch):
     # genuine "no findings" result used to both collapse to raw_findings=[],
     # which is indistinguishable downstream. Track the real reason via an
     # explicit status field instead of silently coercing to [].
-    status = "FINDINGS_FOUND"
+    # Named CANDIDATES_FOUND (not FINDINGS_FOUND) on purpose: at this stage
+    # these are unverified candidates. A batch can be CANDIDATES_FOUND while
+    # every candidate is later REJECTED -- "finding" would read as a
+    # confirmed issue in a delivered report. See report.md 14.6.
+    status = "CANDIDATES_FOUND"
     if isinstance(findings_raw, list):
         findings = findings_raw
         if not findings:
