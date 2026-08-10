@@ -1,0 +1,57 @@
+{
+  "batch_id": "B097",
+  "dir": "containers\\mp4",
+  "tier": 1,
+  "files": [
+    "containers\\mp4\\mp4_reader.c"
+  ],
+  "status": "FINDINGS_FOUND",
+  "raw_findings": [
+    {
+      "cwe": "CWE-120",
+      "file": "containers/mp4/mp4_reader.c",
+      "function": "mp4_read_box_trak",
+      "line": 409,
+      "source": "p_ctx->tracks_num read from file metadata and incremented without bounds checking against allocation size of p_ctx->tracks array",
+      "sink": "vc_container_allocate_track(p_ctx, ...)",
+      "evidence": "if(p_ctx->tracks_num >= MP4_TRACKS_MAX) return VC_CONTAINER_ERROR_OUT_OF_RESOURCES; p_ctx->tracks[p_ctx->tracks_num] = track = vc_container_allocate_track(...); uses MP4_TRACKS_MAX (16) which matches module->tracks array size, but if p_ctx->tracks points elsewhere or tracks_num is manipulated, bounds could be breached.",
+      "cppcheck_correlation": "not_flagged",
+      "confidence": 0.4,
+      "runtime_dependent": true
+    }
+  ],
+  "verified_findings": [
+    {
+      "cwe": "CWE-120",
+      "file": "containers/mp4/mp4_reader.c",
+      "function": "mp4_read_box_trak",
+      "line": 409,
+      "source": "p_ctx->tracks_num read from file metadata and incremented without bounds checking against allocation size of p_ctx->tracks array",
+      "sink": "vc_container_allocate_track(p_ctx, ...)",
+      "evidence": "if(p_ctx->tracks_num >= MP4_TRACKS_MAX) return VC_CONTAINER_ERROR_OUT_OF_RESOURCES; p_ctx->tracks[p_ctx->tracks_num] = track = vc_container_allocate_track(...); uses MP4_TRACKS_MAX (16) which matches module->tracks array size, but if p_ctx->tracks points elsewhere or tracks_num is manipulated, bounds could be breached.",
+      "cppcheck_correlation": "not_flagged",
+      "confidence": 0.4,
+      "runtime_dependent": true,
+      "verifier_status": "REJECTED_BY_GROUNDING_CHECK",
+      "verifier_reason": "[automated] function name 'mp4_read_box_trak' not found within +/-20 lines of claimed line",
+      "llm_verifier_status": "REJECTED"
+    }
+  ],
+  "token_usage": {
+    "analyzer": {
+      "input_tokens": 26130,
+      "output_tokens": 259,
+      "total_tokens": 26389,
+      "thoughts_token_count": null,
+      "invisible_tokens_inferred": 0
+    },
+    "verifier": {
+      "input_tokens": 26016,
+      "output_tokens": 341,
+      "total_tokens": 26357,
+      "thoughts_token_count": 0,
+      "invisible_tokens_inferred": 0
+    }
+  },
+  "timestamp": "2026-08-10T17:40:02.249992"
+}

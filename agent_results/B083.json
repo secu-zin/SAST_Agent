@@ -1,0 +1,28 @@
+{
+  "batch_id": "B083",
+  "dir": "helpers\\dtoverlay",
+  "tier": 1,
+  "files": [
+    "helpers\\dtoverlay\\dtoverlay.c"
+  ],
+  "status": "CLEAN",
+  "raw_findings": [],
+  "verified_findings": [],
+  "token_usage": {
+    "analyzer": {
+      "input_tokens": 30123,
+      "output_tokens": 1,
+      "total_tokens": 30124,
+      "thoughts_token_count": null,
+      "invisible_tokens_inferred": 0
+    },
+    "verifier": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "thoughts_token_count": 0,
+      "invisible_tokens_inferred": 0
+    }
+  },
+  "timestamp": "2026-08-10T17:45:08.933799"
+}
