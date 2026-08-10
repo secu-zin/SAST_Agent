@@ -1,0 +1,44 @@
+{
+  "_note": "Run A 원본 결과. LLM Verifier와 v2 Grounding Check가 모두 CONFIRMED로 통과시켰던 원본 그대로 보존함 (감사 추적 목적 - 의도적으로 수정하지 않음). 이 finding은 report.md §8.3/§10.3에서 저장소 원본 코드(elem_from_handle, is_valid_elem, alloc 함수)와 직접 대조한 결과 REJECTED로 정정되었음. 정정 사유는 manual_ground_truth/B011.json 참조.",
+  "batch_id": "B011",
+  "dir": "interface\\vcos\\generic",
+  "tier": 2,
+  "files": [
+    "interface\\vcos\\generic\\vcos_cmd.c",
+    "interface\\vcos\\generic\\vcos_logcat.c",
+    "interface\\vcos\\generic\\vcos_generic_blockpool.c",
+    "interface\\vcos\\generic\\vcos_msgqueue.c"
+  ],
+  "raw_findings": [
+    {
+      "cwe": "CWE-416",
+      "file": "interface/vcos/generic/vcos_generic_blockpool.c",
+      "function": "vcos_generic_blockpool_free",
+      "line": 348,
+      "source": "Subpool dynamic extension memory allocated via vcos_malloc inside blockpool alloc/extend",
+      "sink": "vcos_free(subpool->mem) followed by mutex unlock without clearing reference or invalidating existing handles",
+      "evidence": "When all blocks in an extension subpool are freed, vcos_generic_blockpool_free frees subpool->mem and sets subpool->mem and subpool->start to NULL. However, subpool->magic remains VCOS_BLOCKPOOL_SUBPOOL_MAGIC and subpool->num_blocks remains unchanged. Subsequent calls or concurrent lookups (e.g. vcos_generic_blockpool_elem_from_handle or pool queries) can access deallocated memory or stale subpool state.",
+      "cppcheck_correlation": "not_flagged",
+      "confidence": 0.8,
+      "runtime_dependent": true
+    }
+  ],
+  "verified_findings": [
+    {
+      "cwe": "CWE-416",
+      "file": "interface/vcos/generic/vcos_generic_blockpool.c",
+      "function": "vcos_generic_blockpool_free",
+      "line": 348,
+      "verifier_status": "CONFIRMED",
+      "verifier_reason": "In vcos_generic_blockpool_free (line 348), when subpool->available_blocks == subpool->num_blocks for an extension subpool, vcos_free(subpool->mem) is executed, setting subpool->mem = NULL and subpool->start = NULL. However, subpool->magic remains VCOS_BLOCKPOOL_SUBPOOL_MAGIC, subpool->num_blocks remains non-zero, and subpool->free_list continues to point to the freed subpool memory block sequence. Furthermore, vcos_generic_blockpool_elem_from_handle calculates header pointers using subpool->start (now NULL), resulting in invalid pointer arithmetic and subsequent dereferences of unmapped memory.",
+      "_grounding_check_result": "PASSED - 함수/라인이 실제로 존재하므로 v2 존재성 검증은 통과함",
+      "_later_correction": "REJECTED (의미적 환각) - 저장소 원본을 직접 대조한 결과, elem_from_handle/is_valid_elem/alloc 세 함수 모두 mem 또는 start의 NULL 여부를 역참조 전에 체크하는 가드 절을 갖고 있어 Verifier가 서술한 경로는 실행되지 않음. report.md §8.3, §10.3 참조."
+    }
+  ],
+  "token_usage": {
+    "analyzer": {"input_tokens": 21126, "output_tokens": 268, "total_tokens": 21394},
+    "verifier": {"input_tokens": 21019, "output_tokens": 462, "total_tokens": 21481}
+  },
+  "model": "gemini-flash-latest (실제 해석: gemini-3.6-flash)",
+  "run_timestamp": "2026-08-10T00:31:22.731594"
+}

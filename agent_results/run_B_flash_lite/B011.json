@@ -1,0 +1,21 @@
+{
+  "_note": "Run B (모델 등급 하향 실험, gemini-flash-lite-latest). 콘솔 요약 로그에서 그대로 옮김. 개별 input/output 토큰 분해값은 세션 기록에 남아있지 않아 total만 기재함 - 정직하게 명시.",
+  "batch_id": "B011",
+  "dir": "interface\\vcos\\generic",
+  "tier": 2,
+  "files": [
+    "interface\\vcos\\generic\\vcos_cmd.c",
+    "interface\\vcos\\generic\\vcos_logcat.c",
+    "interface\\vcos\\generic\\vcos_generic_blockpool.c",
+    "interface\\vcos\\generic\\vcos_msgqueue.c"
+  ],
+  "raw_findings": [],
+  "verified_findings": [],
+  "token_usage": {
+    "analyzer": {"input_tokens": null, "output_tokens": null, "total_tokens": 21127},
+    "verifier": {"input_tokens": 0, "output_tokens": 0, "total_tokens": 0}
+  },
+  "model": "gemini-flash-lite-latest",
+  "console_output_verbatim": "=== B011  (interface\\vcos\\generic, tier 2) ===\n  -> 0건 검증 완료 (CONFIRMED 0건) | 저장: agent_results\\B011.json\n완료: 1개 배치, 총 21127 토큰 사용 (실측)",
+  "comparison_note": "동일 코드, 동일 프롬프트에서 Run A(gemini-3.6-flash)는 CWE-416 후보 1건을 냈으나(이후 REJECTED, run_A_gemini_flash/B011.json 참조) Run B(flash-lite)는 0건. report.md §8.4 참조."
+}

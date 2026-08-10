@@ -232,11 +232,14 @@ def call_gemini(system_prompt, user_content):
         max_output_tokens=8192,
         response_mime_type="application/json",
     )
-    # Which parameter disables "thinking" depends on the model generation
+    # Which parameter controls "thinking" depends on the model generation
     # MODEL_NAME currently resolves to, and that changes over time since
     # "-latest" aliases move forward:
     #   - Gemini <=2.5 style: thinking_config=ThinkingConfig(thinking_budget=0)
     #   - Gemini 3.x style:   thinking_config=ThinkingConfig(thinking_level="minimal")
+    # NOTE (corrected after review, see report.md §6.2/§11.4): Gemini 3
+    # Flash/Flash-Lite do NOT support fully disabling thinking. "minimal" is
+    # documented as "as close to zero as possible", not a guaranteed zero.
     # Try both; if neither is accepted, fall back to leaving thinking on
     # (the large max_output_tokens above still leaves room for the answer).
     thinking_attempts = [
@@ -264,10 +267,25 @@ def call_gemini(system_prompt, user_content):
     if response is None:
         raise last_error
     usage = getattr(response, "usage_metadata", None)
+    prompt_tok = getattr(usage, "prompt_token_count", None) if usage else None
+    candidates_tok = getattr(usage, "candidates_token_count", None) if usage else None
+    total_tok = getattr(usage, "total_token_count", None) if usage else None
+    # FIX (post-review, see report.md §14.5): read the API's own
+    # thoughts_token_count field directly instead of only inferring an
+    # "invisible token" count as total - input - output. The inferred value
+    # is kept as invisible_tokens_inferred for backward comparison with the
+    # earlier run's numbers, but thoughts_token_count is the precise figure
+    # when the API actually returns it.
+    thoughts_tok = getattr(usage, "thoughts_token_count", None) if usage else None
+    inferred_invisible = None
+    if all(v is not None for v in (prompt_tok, candidates_tok, total_tok)):
+        inferred_invisible = total_tok - prompt_tok - candidates_tok
     token_info = {
-        "input_tokens": getattr(usage, "prompt_token_count", None) if usage else None,
-        "output_tokens": getattr(usage, "candidates_token_count", None) if usage else None,
-        "total_tokens": getattr(usage, "total_token_count", None) if usage else None,
+        "input_tokens": prompt_tok,
+        "output_tokens": candidates_tok,
+        "total_tokens": total_tok,
+        "thoughts_token_count": thoughts_tok,
+        "invisible_tokens_inferred": inferred_invisible,
     }
     return response.text or "", token_info
 
@@ -292,13 +310,26 @@ def process_batch(batch):
         f"[Code batch: {batch['batch_id']} - {batch['dir']}]\n{code}"
     )
     analyzer_text, analyzer_tokens = call_gemini(ANALYZER_SYSTEM_PROMPT, analyzer_input)
-    findings = extract_json(analyzer_text)
-    if not isinstance(findings, list):
-        print(f"  [WARN] Analyzer output did not parse as JSON list: {findings}")
+    findings_raw = extract_json(analyzer_text)
+    # FIX (post-review, see report.md §14.6): a JSON-parse failure and a
+    # genuine "no findings" result used to both collapse to raw_findings=[],
+    # which is indistinguishable downstream. Track the real reason via an
+    # explicit status field instead of silently coercing to [].
+    status = "FINDINGS_FOUND"
+    if isinstance(findings_raw, list):
+        findings = findings_raw
+        if not findings:
+            status = "CLEAN"
+    else:
+        print(f"  [WARN] Analyzer output did not parse as JSON list: {findings_raw}")
         findings = []
+        status = "ANALYZER_PARSE_FAILED"
 
     verified = []
-    verifier_tokens = {"input_tokens": 0, "output_tokens": 0, "total_tokens": 0}
+    verifier_tokens = {
+        "input_tokens": 0, "output_tokens": 0, "total_tokens": 0,
+        "thoughts_token_count": 0, "invisible_tokens_inferred": 0,
+    }
     if findings:
         verifier_input = (
             f"[Candidate findings]\n{json.dumps(findings, ensure_ascii=False)}\n\n"
@@ -306,12 +337,24 @@ def process_batch(batch):
         )
         verifier_text, v_tokens = call_gemini(VERIFIER_SYSTEM_PROMPT, verifier_input)
         parsed = extract_json(verifier_text)
-        verified = parsed if isinstance(parsed, list) else findings
+        if isinstance(parsed, list):
+            verified = parsed
+        else:
+            print(f"  [WARN] Verifier output did not parse as JSON list: {parsed}")
+            verified = findings  # fall back to unverified candidates, but flag it
+            status = "VERIFIER_PARSE_FAILED"
         for k in verifier_tokens:
             verifier_tokens[k] = v_tokens.get(k) or 0
 
         # v2: programmatic grounding check overrides the LLM verifier when
         # the claimed file/line/function does not match real file content.
+        # NOTE (post-review, see report.md §10.7): this only checks
+        # *existence* (file/line/function), not whether the claimed guard
+        # logic actually matches the code's real control flow. A finding
+        # whose function/line are real but whose conclusion is wrong (a
+        # "semantic hallucination", see report.md §10.3 / B011 CWE-416)
+        # will pass this check. Treat GROUNDING_CHECK-passed findings as
+        # "not yet disproven", not as independently confirmed.
         file_lines = load_file_lines(batch)
         for f in verified:
             if not isinstance(f, dict):
@@ -327,6 +370,7 @@ def process_batch(batch):
         "dir": batch["dir"],
         "tier": batch["tier"],
         "files": batch["files"],
+        "status": status,
         "raw_findings": findings,
         "verified_findings": verified,
         "token_usage": {"analyzer": analyzer_tokens, "verifier": verifier_tokens},
@@ -362,22 +406,33 @@ def main():
             out_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
             n_confirmed = sum(1 for f in result["verified_findings"]
                                if isinstance(f, dict) and f.get("verifier_status") == "CONFIRMED")
-            print(f"  -> {len(result['verified_findings'])}건 검증 완료 "
+            print(f"  -> [{result['status']}] {len(result['verified_findings'])}건 검증 완료 "
                   f"(CONFIRMED {n_confirmed}건) | 저장: {out_path}")
         except Exception as e:
             print(f"  [ERROR] {batch['batch_id']} 처리 실패: {e}")
+
+    # FIX (post-review, see report.md §14.6): surface parse-failure counts
+    # in the run summary so a failed run can't be mistaken for a clean scan
+    # just by glancing at _summary.json.
+    status_counts = {}
+    for r in all_results:
+        s = r.get("status", "UNKNOWN")
+        status_counts[s] = status_counts.get(s, 0) + 1
 
     summary_path = OUTPUT_DIR / "_summary.json"
     summary_path.write_text(json.dumps({
         "run_timestamp": datetime.now().isoformat(),
         "model": MODEL_NAME,
         "processed_batches": len(all_results),
+        "status_counts": status_counts,
         "total_tokens_used": total_tokens,
         "batch_ids": [r["batch_id"] for r in all_results],
     }, ensure_ascii=False, indent=2), encoding="utf-8")
 
     print(f"\n완료: {len(all_results)}개 배치, 총 {total_tokens} 토큰 사용 (실측)")
+    print(f"상태 집계: {status_counts}")
     print(f"요약 파일: {summary_path}")
+
 
 
 if __name__ == "__main__":

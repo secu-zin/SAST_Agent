@@ -1,0 +1,12 @@
+{
+  "batch_id": "B097",
+  "verification_method": "대화형 grep + 다단계 함수 추적 (mp4_read_box_stsz -> mp4_cache_table -> mp4_read_box_trak)",
+  "final_verdicts": [
+    {
+      "cwe": "CWE-190 / CWE-787 / CWE-369 (가설)",
+      "function": "mp4_cache_table",
+      "status": "REJECTED",
+      "note": "entries가 available_entries = size/entry_size로 클램핑되고, entry_size가 mp4_read_box_trak에서 0이 아닌 상수로 정의됨. 3단계 함수 추적이 필요했던 안전한 패턴. 자동 파이프라인(Run A)은 이 경로를 재발견하지 못하고 완전히 다른 두 지점(mp4_read_sample_table, mp4_read_box_stsd)을 검토해 둘 다 REJECTED 처리함. 결론(문제없음)은 같으나 추적 경로가 다름."
+    }
+  ]
+}

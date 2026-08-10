@@ -1,0 +1,62 @@
+{
+  "_note": "Run A 원본 결과. LLM이 실제로 출력한 값을 수정 없이 그대로 보존함 (감사 추적 목적). finding #2, #3은 report.md §10.1, §10.2에서 환각으로 판명되어 REJECTED되었음 - 그 판정은 이 파일이 아니라 manual_ground_truth/B083.json에 기록됨.",
+  "batch_id": "B083",
+  "dir": "helpers\\dtoverlay",
+  "tier": 1,
+  "files": ["helpers\\dtoverlay\\dtoverlay.c"],
+  "raw_findings": [
+    {
+      "cwe": "CWE-476",
+      "file": "helpers/dtoverlay/dtoverlay.c",
+      "function": "dtoverlay_dup_property",
+      "line": 2320,
+      "source": "Device Tree Overlay 블롭(dtb)의 속성 길이. prop_len은 int로 선언됨(line 2304), size_t가 아님",
+      "sink": "malloc(prop_len) 반환값 미검증 후 memcpy(prop_data, src_prop, prop_len)의 목적지로 즉시 사용 (line 2320-2321)",
+      "cppcheck_correlation": "confirmed",
+      "confidence": 0.9
+    },
+    {
+      "cwe": "CWE-120",
+      "file": "helpers/dtoverlay/dtoverlay.c",
+      "function": "dtoverlay_init_map",
+      "line": 2517,
+      "sink": "sprintf",
+      "cppcheck_correlation": "not_flagged",
+      "confidence": 0.7
+    },
+    {
+      "cwe": "CWE-120",
+      "file": "helpers/dtoverlay/dtoverlay.c",
+      "function": "dtoverlay_extract_override",
+      "line": 1836,
+      "sink": "strcpy",
+      "cppcheck_correlation": "not_flagged",
+      "confidence": 0.65
+    }
+  ],
+  "verified_findings": [
+    {
+      "cwe": "CWE-476",
+      "line": 2320,
+      "verifier_status": "CONFIRMED"
+    },
+    {
+      "cwe": "CWE-120",
+      "line": 2517,
+      "verifier_status": "CONFIRMED",
+      "_later_correction": "REJECTED (구문적 환각) - line 2517은 dtoverlay_load_dtb 함수 내 에러 로그 한 줄이며 dtoverlay_init_map이라는 함수도, sprintf 호출도 존재하지 않음. report.md §10.1 참조."
+    },
+    {
+      "cwe": "CWE-120",
+      "line": 1836,
+      "verifier_status": "CONFIRMED",
+      "_later_correction": "REJECTED (구문적 환각) - line 1836은 코드가 아니라 주석이며, 실제 로직은 memcpy + malloc NULL 체크가 있는 방어적 코드임. report.md §10.2 참조."
+    }
+  ],
+  "token_usage": {
+    "analyzer": {"input_tokens": 30123, "output_tokens": null, "total_tokens": 34050},
+    "verifier": {"input_tokens": null, "output_tokens": null, "total_tokens": 30241}
+  },
+  "model": "gemini-flash-latest (실제 해석: gemini-3.6-flash)",
+  "run_timestamp": "2026-08-10T00:31:22.735677"
+}

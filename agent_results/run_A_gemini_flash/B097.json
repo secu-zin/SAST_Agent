@@ -1,0 +1,42 @@
+{
+  "_note": "Run A 원본 결과. LLM이 실제로 출력한 값을 수정 없이 보존함. 두 후보 모두 자체 검증 단계에서 REJECTED됨 - 이는 환각이 아니라 정상적인 기각 판정(방어 로직 확인).",
+  "batch_id": "B097",
+  "dir": "containers\\mp4",
+  "tier": 1,
+  "files": ["containers\\mp4\\mp4_reader.c"],
+  "raw_findings": [
+    {
+      "cwe": "CWE-190",
+      "file": "containers/mp4/mp4_reader.c",
+      "function": "mp4_read_sample_table",
+      "line": 801
+    },
+    {
+      "cwe": "CWE-125",
+      "file": "containers/mp4/mp4_reader.c",
+      "function": "mp4_read_box_stsd",
+      "line": 560
+    }
+  ],
+  "verified_findings": [
+    {
+      "cwe": "CWE-190",
+      "line": 801,
+      "verifier_status": "REJECTED",
+      "verifier_reason": "선행 클램프 검사(state->chunks >= value)가 언더플로우를 차단함"
+    },
+    {
+      "cwe": "CWE-125",
+      "line": 560,
+      "verifier_status": "REJECTED",
+      "verifier_reason": "index >= 13일 때 rate[index]에 접근하는 분기 자체가 실행되지 않음"
+    }
+  ],
+  "token_usage": {
+    "analyzer": {"input_tokens": 26130, "output_tokens": 164, "total_tokens": 26647},
+    "verifier": {"input_tokens": null, "output_tokens": null, "total_tokens": 27001}
+  },
+  "model": "gemini-flash-latest (실제 해석: gemini-3.6-flash)",
+  "run_timestamp": "2026-08-10T00:31:22.735677",
+  "note_manual_comparison": "수동 검증(manual_ground_truth/B097.json)은 mp4_cache_table 클램핑 로직을 추적했으나, 자동 파이프라인은 이 경로를 재발견하지 못하고 완전히 다른 두 지점(mp4_read_sample_table, mp4_read_box_stsd)을 검토함. 결론(문제없음)은 같지만 추적 경로는 다름 - report.md §9 참조."
+}

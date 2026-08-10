@@ -1,0 +1,30 @@
+{
+  "batch_id": "B011",
+  "verification_method": "PowerShell Select-String 추적 (1차) + 저장소 원본 직접 fetch 후 라인 단위 대조 (2차, 리뷰 과정)",
+  "final_verdicts": [
+    {
+      "cwe": "CWE-362",
+      "file": "interface/vcos/generic/vcos_msgqueue.c",
+      "function": "vcos_msg_peek",
+      "line": 224,
+      "status": "RUNTIME_VALIDATION_REQUIRED",
+      "confidence": 0.6,
+      "note": "msgq_append(mutex 보호)와 vcos_semaphore_post(mutex 밖) 사이 non-atomic gap. coverity[lock_order] 억제 주석(221-223행)의 전제('세마포어는 항상 non-zero')가 이 gap에서 깨질 수 있음. 대조군 vcos_msg_wait(190-191행)는 반대 순서. 모든 줄 번호·함수명·인용 주석을 저장소 원본과 1:1 대조 완료. 완전한 deadlock은 아니고 liveness/지연 이슈에 가까움 - 정적 분석만으로 실제 트리거 여부 확정 불가하여 RUNTIME_VALIDATION_REQUIRED로 분류(초고에서는 LIKELY였으나 자체 판정 기준과의 일관성을 위해 재조정)."
+    },
+    {
+      "cwe": "CWE-416",
+      "file": "interface/vcos/generic/vcos_generic_blockpool.c",
+      "function": "vcos_generic_blockpool_free",
+      "line": 348,
+      "status": "REJECTED - 의미적 환각 (자동 파이프라인 Run A의 CONFIRMED 판정을 정정)",
+      "note": "저장소 원본(raspberrypi/userland master 브랜치)을 직접 fetch해 elem_from_handle(496행), is_valid_elem(530행 부근), alloc(264행) 세 함수를 전부 대조함. 세 함수 모두 subpool->mem 또는 subpool->start의 NULL 여부를 포인터 연산 전에 체크하는 가드 절을 갖고 있어, Verifier가 위험하다고 서술한 경로(NULL이 된 start로 포인터 산술)는 실제로 도달 불가능함. 함수명·라인 번호·인용된 코드 조각은 모두 실제 코드와 일치했기 때문에, 존재성만 확인하는 v2 Grounding Check로는 걸러지지 않았음. 이는 report.md §10.3에서 '의미적 환각'으로 분류되었고, v3(Evidence Contract) 설계 제안(§10.7)의 직접적 동기가 됨.",
+      "source_evidence": {
+        "elem_from_handle_guard": "line ~510: if (pool->subpools[subpool_id].magic == VCOS_BLOCKPOOL_SUBPOOL_MAGIC && pool->subpools[subpool_id].mem && index < subpool->num_blocks) { ... 포인터 연산은 이 블록 안에서만 실행됨 ... }",
+        "is_valid_elem_guard": "if (subpool->mem && subpool->start) { ... }",
+        "alloc_guard": "if (pool->subpools[i].start && pool->subpools[i].available_blocks > 0) { ... } 두 번째 루프는 !pool->subpools[i].start인 슬롯만 재사용 대상으로 취급"
+      }
+    }
+  ],
+  "batch_final_confirmed_count": 0,
+  "note": "B011 배치에서 자동 파이프라인이 제시한 유일한 CONFIRMED 후보(CWE-416)가 사람 재검증으로 REJECTED되었으므로, 이 배치의 최종 CONFIRMED 건수는 0건이다. 수동으로 찾은 CWE-362는 RUNTIME_VALIDATION_REQUIRED이지 CONFIRMED가 아니다."
+}

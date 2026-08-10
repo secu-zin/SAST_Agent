@@ -1,0 +1,28 @@
+{
+  "batch_id": "B083",
+  "verification_method": "PowerShell Get-CodeContext 헬퍼로 실제 파일 원본 대조",
+  "final_verdicts": [
+    {
+      "cwe": "CWE-476",
+      "function": "dtoverlay_dup_property",
+      "line": 2320,
+      "status": "CONFIRMED",
+      "confidence": 0.9,
+      "note": "malloc(prop_len) 반환값 미검증 후 memcpy 목적지로 사용. fdt_setprop_inplace() 실패 시 진입하는 정상 폴백 경로. 자동 파이프라인(Run A)과 일치."
+    },
+    {
+      "cwe": "CWE-120",
+      "function": "dtoverlay_init_map (자동 파이프라인 주장)",
+      "line": 2517,
+      "status": "REJECTED - 구문적 환각",
+      "note": "실제 line 2517은 dtoverlay_load_dtb 함수 내 dtoverlay_error() 호출 한 줄. 주장된 함수명, sprintf 호출 모두 존재하지 않음."
+    },
+    {
+      "cwe": "CWE-120",
+      "function": "dtoverlay_extract_override (자동 파이프라인 주장)",
+      "line": 1836,
+      "status": "REJECTED - 구문적 환각",
+      "note": "실제 line 1836은 주석. 근처 실제 코드는 memcpy + malloc NULL 체크가 있는 방어적 코드."
+    }
+  ]
+}

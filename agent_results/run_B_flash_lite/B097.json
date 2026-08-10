@@ -1,0 +1,17 @@
+{
+  "_note": "Run B (모델 등급 하향 실험, gemini-flash-lite-latest). 콘솔 요약 로그에는 B083+B097 합산 토큰(56,255)만 출력되었고 배치별 분해값은 세션 기록에 없음 - 정직하게 명시.",
+  "batch_id": "B097",
+  "dir": "containers\\mp4",
+  "tier": 1,
+  "files": ["containers\\mp4\\mp4_reader.c"],
+  "raw_findings": [],
+  "verified_findings": [],
+  "token_usage": {
+    "analyzer": {"input_tokens": null, "output_tokens": null, "total_tokens": null},
+    "verifier": {"input_tokens": 0, "output_tokens": 0, "total_tokens": 0}
+  },
+  "model": "gemini-flash-lite-latest",
+  "console_output_verbatim": "=== B097  (containers\\mp4, tier 1) ===\n  -> 0건 검증 완료 (CONFIRMED 0건) | 저장: agent_results\\B097.json",
+  "combined_run_total_tokens_B083_plus_B097": 56255,
+  "comparison_note": "동일 코드에서 Run A(gemini-3.6-flash)는 2건을 냈으나 둘 다 REJECTED(run_A_gemini_flash/B097.json 참조). Run B(flash-lite)는 애초에 후보를 내지 못함(0건). report.md §8.4 참조."
+}
