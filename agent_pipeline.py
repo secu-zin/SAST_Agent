@@ -396,7 +396,65 @@ def process_batch(batch):
     }
 
 
+def build_summary():
+    """Rebuild the run summary from every batch result file currently
+    sitting in OUTPUT_DIR, not just the batches processed in this
+    invocation.
+
+    FIX (post-review, see report.md 8.5/14.6.2): _summary.json used to
+    reflect only `all_results` from the current CLI invocation. Running
+    batches across separate invocations (e.g. `python agent_pipeline.py
+    B097` and later `python agent_pipeline.py B083 B011`) silently
+    dropped earlier batches from the summary even though their JSON
+    files were still on disk -- the summary and the actual files it
+    was supposed to describe drifted apart. This scans OUTPUT_DIR
+    directly so the summary always matches what's really there.
+    """
+    status_counts = {}
+    batch_ids = []
+    total_tokens = 0
+    for f in sorted(OUTPUT_DIR.glob("*.json")):
+        if f.name == "_summary.json" or ".prev-" in f.name:
+            continue
+        try:
+            data = json.loads(f.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if "batch_id" not in data:
+            continue
+        batch_ids.append(data["batch_id"])
+        s = data.get("status", "UNKNOWN")
+        status_counts[s] = status_counts.get(s, 0) + 1
+        usage = data.get("token_usage", {})
+        total_tokens += (usage.get("analyzer", {}) or {}).get("total_tokens") or 0
+        total_tokens += (usage.get("verifier", {}) or {}).get("total_tokens") or 0
+    return {
+        "run_timestamp": datetime.now().isoformat(),
+        "model": MODEL_NAME,
+        "processed_batches": len(batch_ids),
+        "status_counts": status_counts,
+        "total_tokens_used": total_tokens,
+        "batch_ids": batch_ids,
+    }
+
+
 def main():
+    # --resummarize: rebuild _summary.json from whatever batch result
+    # files already exist in agent_results/, with zero API calls. Use
+    # this after running batches in separate invocations, instead of
+    # re-running a batch just to refresh the summary (re-running risks
+    # a different, non-deterministic result overwriting a batch you
+    # already finalized -- see report.md 8.5 and 14.9).
+    if "--resummarize" in sys.argv:
+        OUTPUT_DIR.mkdir(exist_ok=True)
+        summary = build_summary()
+        (OUTPUT_DIR / "_summary.json").write_text(
+            json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"요약 재구성 완료 (API 호출 없음): {summary['processed_batches']}개 배치")
+        print(f"상태 집계: {summary['status_counts']}")
+        print(f"배치 목록: {summary['batch_ids']}")
+        return
+
     if not os.environ.get("GEMINI_API_KEY") and not os.environ.get("GOOGLE_API_KEY"):
         print("[ERROR] GEMINI_API_KEY (or GOOGLE_API_KEY) 환경변수가 설정되어 있지 않습니다.")
         print('  PowerShell: $env:GEMINI_API_KEY = "your-key-here"')
@@ -444,23 +502,16 @@ def main():
     # FIX (post-review, see report.md §14.6): surface parse-failure counts
     # in the run summary so a failed run can't be mistaken for a clean scan
     # just by glancing at _summary.json.
-    status_counts = {}
-    for r in all_results:
-        s = r.get("status", "UNKNOWN")
-        status_counts[s] = status_counts.get(s, 0) + 1
-
+    # Build the summary from every file currently in OUTPUT_DIR (not just
+    # this invocation's `all_results`), so running batches across separate
+    # invocations doesn't silently drop earlier batches from the summary.
+    summary = build_summary()
     summary_path = OUTPUT_DIR / "_summary.json"
-    summary_path.write_text(json.dumps({
-        "run_timestamp": datetime.now().isoformat(),
-        "model": MODEL_NAME,
-        "processed_batches": len(all_results),
-        "status_counts": status_counts,
-        "total_tokens_used": total_tokens,
-        "batch_ids": [r["batch_id"] for r in all_results],
-    }, ensure_ascii=False, indent=2), encoding="utf-8")
+    summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    print(f"\n완료: {len(all_results)}개 배치, 총 {total_tokens} 토큰 사용 (실측)")
-    print(f"상태 집계: {status_counts}")
+    print(f"\n완료(이번 실행): {len(all_results)}개 배치, 총 {total_tokens} 토큰 사용 (실측)")
+    print(f"요약 파일 기준(agent_results/ 전체): {summary['processed_batches']}개 배치, "
+          f"상태 집계 {summary['status_counts']}")
     print(f"요약 파일: {summary_path}")
 
 

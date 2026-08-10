@@ -1529,6 +1529,40 @@ out_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="
 
 > **상태명을 `FINDINGS_FOUND`가 아니라 `CANDIDATES_FOUND`로 정한 이유**: 이 단계의 산출물은 **검증 전 후보**다. 실제로 Run C의 B097은 반복 실행마다 `CANDIDATES_FOUND`이지만(§8.5, §14.9) 최종 CONFIRMED는 매번 0건이었다. 납품 문맥에서 "finding"은 확정된 이슈로 읽히기 쉬우므로, 상태명 자체가 확정성을 암시하지 않도록 바꿨다. 용어 하나가 오독을 만드는 것도 §14.6이 다루는 신뢰성 문제의 일부다.
 
+### 14.6.2 잔여 문제 — `_summary.json`이 배치 파일과 따로 노는 현상 (패치 완료·실행 검증됨)
+
+**현황(패치 전)**: `_summary.json`은 **그 CLI 호출 한 번에 처리한 배치만** 반영하도록 짜여 있었다. 예를 들어 `python agent_pipeline.py B097`을 먼저 실행하고, 그다음 별도로 `python agent_pipeline.py B083 B011`을 실행하면 — 개별 배치 파일(`B097.json`, `B083.json`, `B011.json`)은 전부 디스크에 정상적으로 남아있는데도, **`_summary.json`은 마지막 호출의 두 배치(B083, B011)만 기록하고 B097은 빠졌다.** 실제로 이 문제가 리뷰 과정에서 발견됐다 — `_summary.json`은 `processed_batches: 2`였지만 `agent_results/`에는 최신 B097.json이 엄연히 존재하는 상태였다.
+
+**패치**: `_summary.json`을 "이번 호출에서 처리한 배치 목록"이 아니라 **"`agent_results/` 폴더에 현재 존재하는 모든 배치 결과 파일"을 스캔해 재구성**하도록 바꿨다.
+
+```python
+def build_summary():
+    status_counts = {}
+    batch_ids = []
+    total_tokens = 0
+    for f in sorted(OUTPUT_DIR.glob("*.json")):
+        if f.name == "_summary.json" or ".prev-" in f.name:
+            continue
+        data = json.loads(f.read_text(encoding="utf-8"))
+        if "batch_id" not in data:
+            continue
+        batch_ids.append(data["batch_id"])
+        s = data.get("status", "UNKNOWN")
+        status_counts[s] = status_counts.get(s, 0) + 1
+        ...
+    return {...}
+```
+
+정상 실행 시에는 매 호출 끝에 이 함수로 요약을 재구성한다. 추가로, **API를 호출하지 않고 요약만 갱신**하는 경로도 만들었다:
+
+```bash
+python agent_pipeline.py --resummarize
+```
+
+이 플래그는 LLM을 전혀 호출하지 않고 기존 배치 JSON만 읽어 `_summary.json`을 재구성한다. **이 기능이 필요한 이유는 §14.9와 직결된다** — `temperature=0.1`이 0이 아니므로 같은 배치를 다시 실행하면 다른 후보가 나올 수 있다. 요약만 맞추려고 이미 확정한 배치(B097 등)를 다시 돌리면 그 결과가 또 바뀌어 report.md와 어긋나는 악순환이 생긴다. `--resummarize`는 **기존 결과를 건드리지 않고** 요약만 현재 상태에 맞춘다.
+
+**실행으로 검증됨**: 이 패치 이후 `python agent_pipeline.py B083 B011`을 실행하면(또는 `--resummarize`를 실행하면), `_summary.json`이 `processed_batches: 3`, `batch_ids: ["B011", "B083", "B097"]`(글롭 정렬 순서)로 B097을 포함해 정확히 재구성된다.
+
 ### 14.7 GitHub 산출물과 보고서 증적의 정합성
 
 **문제(초고 시점)**: 본 보고서가 인용하는 Run A(§8.2~8.3, 실제 CONFIRMED/REJECTED 판정과 160,814토큰 실측치)는 대화 로그에는 남아 있지만, 실행 스크립트가 매 실행마다 같은 파일명(`agent_results/B083.json` 등)에 결과를 덮어쓰는 구조라 **GitHub 저장소에는 이후 실행한 Run B(flash-lite, 0건) 결과만 남아 있었다.** 즉 그 시점의 저장소만 봐서는 본 보고서의 핵심 실험 결과(§8.2~8.3, §10)를 검증할 수 없었다.

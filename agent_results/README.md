@@ -29,6 +29,7 @@ agent_results/
 - **Run A 원본 JSON은 수정하지 않았습니다.** LLM이 실제로 뭐라고 말했는지 그 자체가 감사 추적(audit trail)으로서 기록 가치가 있기 때문입니다. 이후 판정이 뒤집힌 항목(B011의 CWE-416)도 원본 CONFIRMED 판정을 지우지 않고 `_later_correction` 필드로 정정 사유만 덧붙였습니다.
 - **정정의 최종 근거는 `manual_ground_truth/`에 있습니다.** B011.json에는 실제 저장소 코드에서 발췌한 가드 절(guard clause) 3곳을 직접 인용해, "왜 REJECTED인지"를 재현 가능하게 남겼습니다.
 - Run B의 배치별 토큰 세부값 일부는 세션 로그에 합산치만 남아 있어 `null`로 정직하게 표기했습니다(§14.9 향후 과제 — 재실행 시 정확한 값 확보).
+- **`agent_results/` 루트(`B011.json`, `B083.json`, `B097.json`, `_summary.json`)는 §14.5~14.6 신뢰성 패치를 검증한 최신 실행(Run C, §8.5)의 결과입니다.** 같은 폴더의 `*.prev-<timestamp>.json` 파일은 §14.6.1의 자동 백업 패치가 남긴 이전 실행분입니다 — 지우지 않고 그대로 둡니다. `_summary.json`은 이 세 배치 파일을 스캔해 재구성한 것으로(`--resummarize` 참조), 개별 CLI 호출 범위가 아니라 폴더 전체 상태를 반영합니다.
 
 ## report.md와의 대응
 
@@ -37,5 +38,6 @@ agent_results/
 | §8.2 (Run A 실행 결과) | `run_A_gemini_flash/*.json` |
 | §8.3 (B011 정정 과정) | `run_A_gemini_flash/B011.json` + `manual_ground_truth/B011.json` |
 | §8.4 (Run B 모델 교체 실험) | `run_B_flash_lite/*.json` |
+| §8.5 (Run C 패치 검증, 최신 실행) | 루트 `B011.json` / `B083.json` / `B097.json` / `_summary.json` |
 | §9 (사람 vs 자동 교차검증) | `manual_ground_truth/*.json` vs `run_A_gemini_flash/*.json` |
 | §10 (환각 3건) | `run_A_gemini_flash/B083.json`(사례 1·2), `run_A_gemini_flash/B011.json`(사례 3) |
