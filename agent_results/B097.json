@@ -6,15 +6,16 @@
     "containers\\mp4\\mp4_reader.c"
   ],
   "status": "CANDIDATES_FOUND",
+  "cppcheck_status": "OK",
   "raw_findings": [
     {
       "cwe": "CWE-125",
       "file": "containers/mp4/mp4_reader.c",
       "function": "mp4_read_box_trak",
-      "line": 401,
-      "source": "p_ctx->tracks_num read from stream state / track parsing without upper bound validation before array indexing",
-      "sink": "p_ctx->tracks[p_ctx->tracks_num] accessed/written",
-      "evidence": "If p_ctx->tracks_num reaches MP4_TRACKS_MAX (16), the check 'if(p_ctx->tracks_num >= MP4_TRACKS_MAX) return VC_CONTAINER_ERROR_OUT_OF_RESOURCES;' protects it, but in mp4_read_box_hdlr and elsewhere, track indices are indexed directly using module->current_track without robust bounds check against MP4_TRACKS_MAX.",
+      "line": 409,
+      "source": "p_ctx->tracks_num read from stream / track count",
+      "sink": "p_ctx->tracks[p_ctx->tracks_num]",
+      "evidence": "If p_ctx->tracks_num equals MP4_TRACKS_MAX (16), the check 'p_ctx->tracks_num >= MP4_TRACKS_MAX' returns out of resources, but if not carefully synchronized across tracks array bounds (e.g., if tracks_num can be manipulated or if an index is accessed without bounds checks elsewhere like module->current_track), array out-of-bounds reads can occur.",
       "cppcheck_correlation": "not_flagged",
       "confidence": 0.7,
       "runtime_dependent": true
@@ -23,12 +24,24 @@
       "cwe": "CWE-476",
       "file": "containers/mp4/mp4_reader.c",
       "function": "mp4_read_box_mdhd",
-      "line": 455,
-      "source": "module->current_track indexing p_ctx->tracks[]",
-      "sink": "p_ctx->tracks[module->current_track]->priv->module pointer dereference",
-      "evidence": "p_ctx->tracks[module->current_track] is dereferenced without verifying that current_track is strictly less than p_ctx->tracks_num.",
+      "line": 472,
+      "source": "p_ctx->tracks[module->current_track] where module->current_track comes from parsed track boxes",
+      "sink": "p_ctx->tracks[module->current_track]->priv->module dereference",
+      "evidence": "module->current_track is incremented when reading tracks, but if a track box is encountered when tracks allocation failed or tracks_num exceeds allocated tracks, p_ctx->tracks[module->current_track] could be NULL.",
       "cppcheck_correlation": "not_flagged",
       "confidence": 0.8,
+      "runtime_dependent": true
+    },
+    {
+      "cwe": "CWE-787",
+      "file": "containers/mp4/mp4_reader.c",
+      "function": "mp4_cache_table",
+      "line": 641,
+      "source": "entries and size computed from file stream data inside box parsers (stts, stsc, etc.)",
+      "sink": "vc_container_io_cache(p_ctx->priv->io, entries_size)",
+      "evidence": "entries_size is calculated as entries * entry_size without checking for integer overflow (CWE-190), which can lead to allocating/caching a smaller buffer than expected resulting in out-of-bounds writes.",
+      "cppcheck_correlation": "not_flagged",
+      "confidence": 0.85,
       "runtime_dependent": true
     }
   ],
@@ -37,10 +50,10 @@
       "cwe": "CWE-125",
       "file": "containers/mp4/mp4_reader.c",
       "function": "mp4_read_box_trak",
-      "line": 401,
-      "source": "p_ctx->tracks_num read from stream state / track parsing without upper bound validation before array indexing",
-      "sink": "p_ctx->tracks[p_ctx->tracks_num] accessed/written",
-      "evidence": "If p_ctx->tracks_num reaches MP4_TRACKS_MAX (16), the check 'if(p_ctx->tracks_num >= MP4_TRACKS_MAX) return VC_CONTAINER_ERROR_OUT_OF_RESOURCES;' protects it, but in mp4_read_box_hdlr and elsewhere, track indices are indexed directly using module->current_track without robust bounds check against MP4_TRACKS_MAX.",
+      "line": 409,
+      "source": "p_ctx->tracks_num read from stream / track count",
+      "sink": "p_ctx->tracks[p_ctx->tracks_num]",
+      "evidence": "If p_ctx->tracks_num equals MP4_TRACKS_MAX (16), the check 'p_ctx->tracks_num >= MP4_TRACKS_MAX' returns out of resources, but if not carefully synchronized across tracks array bounds (e.g., if tracks_num can be manipulated or if an index is accessed without bounds checks elsewhere like module->current_track), array out-of-bounds reads can occur.",
       "cppcheck_correlation": "not_flagged",
       "confidence": 0.7,
       "runtime_dependent": true,
@@ -52,33 +65,48 @@
       "cwe": "CWE-476",
       "file": "containers/mp4/mp4_reader.c",
       "function": "mp4_read_box_mdhd",
-      "line": 455,
-      "source": "module->current_track indexing p_ctx->tracks[]",
-      "sink": "p_ctx->tracks[module->current_track]->priv->module pointer dereference",
-      "evidence": "p_ctx->tracks[module->current_track] is dereferenced without verifying that current_track is strictly less than p_ctx->tracks_num.",
+      "line": 472,
+      "source": "p_ctx->tracks[module->current_track] where module->current_track comes from parsed track boxes",
+      "sink": "p_ctx->tracks[module->current_track]->priv->module dereference",
+      "evidence": "module->current_track is incremented when reading tracks, but if a track box is encountered when tracks allocation failed or tracks_num exceeds allocated tracks, p_ctx->tracks[module->current_track] could be NULL.",
       "cppcheck_correlation": "not_flagged",
       "confidence": 0.8,
       "runtime_dependent": true,
       "verifier_status": "REJECTED_BY_GROUNDING_CHECK",
       "verifier_reason": "[automated] function name 'mp4_read_box_mdhd' not found within +/-20 lines of claimed line",
       "llm_verifier_status": "CONFIRMED"
+    },
+    {
+      "cwe": "CWE-787",
+      "file": "containers/mp4/mp4_reader.c",
+      "function": "mp4_cache_table",
+      "line": 641,
+      "source": "entries and size computed from file stream data inside box parsers (stts, stsc, etc.)",
+      "sink": "vc_container_io_cache(p_ctx->priv->io, entries_size)",
+      "evidence": "entries_size is calculated as entries * entry_size without checking for integer overflow (CWE-190), which can lead to allocating/caching a smaller buffer than expected resulting in out-of-bounds writes.",
+      "cppcheck_correlation": "not_flagged",
+      "confidence": 0.85,
+      "runtime_dependent": true,
+      "verifier_status": "REJECTED_BY_GROUNDING_CHECK",
+      "verifier_reason": "[automated] function name 'mp4_cache_table' not found within +/-20 lines of claimed line",
+      "llm_verifier_status": "CONFIRMED"
     }
   ],
   "token_usage": {
     "analyzer": {
       "input_tokens": 26130,
-      "output_tokens": 435,
-      "total_tokens": 26565,
+      "output_tokens": 640,
+      "total_tokens": 26770,
       "thoughts_token_count": null,
       "invisible_tokens_inferred": 0
     },
     "verifier": {
-      "input_tokens": 26167,
-      "output_tokens": 645,
-      "total_tokens": 26812,
+      "input_tokens": 26347,
+      "output_tokens": 942,
+      "total_tokens": 27289,
       "thoughts_token_count": 0,
       "invisible_tokens_inferred": 0
     }
   },
-  "timestamp": "2026-08-10T18:42:30.677386"
+  "timestamp": "2026-08-11T01:15:58.552623"
 }

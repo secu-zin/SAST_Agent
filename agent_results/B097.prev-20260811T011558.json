@@ -1,0 +1,84 @@
+{
+  "batch_id": "B097",
+  "dir": "containers\\mp4",
+  "tier": 1,
+  "files": [
+    "containers\\mp4\\mp4_reader.c"
+  ],
+  "status": "CANDIDATES_FOUND",
+  "raw_findings": [
+    {
+      "cwe": "CWE-125",
+      "file": "containers/mp4/mp4_reader.c",
+      "function": "mp4_read_box_trak",
+      "line": 401,
+      "source": "p_ctx->tracks_num read from stream state / track parsing without upper bound validation before array indexing",
+      "sink": "p_ctx->tracks[p_ctx->tracks_num] accessed/written",
+      "evidence": "If p_ctx->tracks_num reaches MP4_TRACKS_MAX (16), the check 'if(p_ctx->tracks_num >= MP4_TRACKS_MAX) return VC_CONTAINER_ERROR_OUT_OF_RESOURCES;' protects it, but in mp4_read_box_hdlr and elsewhere, track indices are indexed directly using module->current_track without robust bounds check against MP4_TRACKS_MAX.",
+      "cppcheck_correlation": "not_flagged",
+      "confidence": 0.7,
+      "runtime_dependent": true
+    },
+    {
+      "cwe": "CWE-476",
+      "file": "containers/mp4/mp4_reader.c",
+      "function": "mp4_read_box_mdhd",
+      "line": 455,
+      "source": "module->current_track indexing p_ctx->tracks[]",
+      "sink": "p_ctx->tracks[module->current_track]->priv->module pointer dereference",
+      "evidence": "p_ctx->tracks[module->current_track] is dereferenced without verifying that current_track is strictly less than p_ctx->tracks_num.",
+      "cppcheck_correlation": "not_flagged",
+      "confidence": 0.8,
+      "runtime_dependent": true
+    }
+  ],
+  "verified_findings": [
+    {
+      "cwe": "CWE-125",
+      "file": "containers/mp4/mp4_reader.c",
+      "function": "mp4_read_box_trak",
+      "line": 401,
+      "source": "p_ctx->tracks_num read from stream state / track parsing without upper bound validation before array indexing",
+      "sink": "p_ctx->tracks[p_ctx->tracks_num] accessed/written",
+      "evidence": "If p_ctx->tracks_num reaches MP4_TRACKS_MAX (16), the check 'if(p_ctx->tracks_num >= MP4_TRACKS_MAX) return VC_CONTAINER_ERROR_OUT_OF_RESOURCES;' protects it, but in mp4_read_box_hdlr and elsewhere, track indices are indexed directly using module->current_track without robust bounds check against MP4_TRACKS_MAX.",
+      "cppcheck_correlation": "not_flagged",
+      "confidence": 0.7,
+      "runtime_dependent": true,
+      "verifier_status": "REJECTED_BY_GROUNDING_CHECK",
+      "verifier_reason": "[automated] function name 'mp4_read_box_trak' not found within +/-20 lines of claimed line",
+      "llm_verifier_status": "REJECTED"
+    },
+    {
+      "cwe": "CWE-476",
+      "file": "containers/mp4/mp4_reader.c",
+      "function": "mp4_read_box_mdhd",
+      "line": 455,
+      "source": "module->current_track indexing p_ctx->tracks[]",
+      "sink": "p_ctx->tracks[module->current_track]->priv->module pointer dereference",
+      "evidence": "p_ctx->tracks[module->current_track] is dereferenced without verifying that current_track is strictly less than p_ctx->tracks_num.",
+      "cppcheck_correlation": "not_flagged",
+      "confidence": 0.8,
+      "runtime_dependent": true,
+      "verifier_status": "REJECTED_BY_GROUNDING_CHECK",
+      "verifier_reason": "[automated] function name 'mp4_read_box_mdhd' not found within +/-20 lines of claimed line",
+      "llm_verifier_status": "CONFIRMED"
+    }
+  ],
+  "token_usage": {
+    "analyzer": {
+      "input_tokens": 26130,
+      "output_tokens": 435,
+      "total_tokens": 26565,
+      "thoughts_token_count": null,
+      "invisible_tokens_inferred": 0
+    },
+    "verifier": {
+      "input_tokens": 26167,
+      "output_tokens": 645,
+      "total_tokens": 26812,
+      "thoughts_token_count": 0,
+      "invisible_tokens_inferred": 0
+    }
+  },
+  "timestamp": "2026-08-10T18:42:30.677386"
+}

@@ -1,15 +1,13 @@
 {
-  "run_timestamp": "2026-08-10T18:42:33.747655",
+  "run_timestamp": "2026-08-11T01:16:39.058283",
   "model": "gemini-flash-lite-latest",
-  "processed_batches": 3,
+  "processed_batches": 2,
   "status_counts": {
-    "CLEAN": 2,
-    "CANDIDATES_FOUND": 1
+    "CLEAN": 2
   },
-  "total_tokens_used": 104628,
+  "total_tokens_used": 51251,
   "batch_ids": [
     "B083",
-    "B097",
     "B011"
   ]
 }

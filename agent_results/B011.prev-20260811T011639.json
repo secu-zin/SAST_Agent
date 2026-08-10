@@ -9,7 +9,6 @@
     "interface\\vcos\\generic\\vcos_msgqueue.c"
   ],
   "status": "CLEAN",
-  "cppcheck_status": "OK",
   "raw_findings": [],
   "verified_findings": [],
   "token_usage": {
@@ -28,5 +27,5 @@
       "invisible_tokens_inferred": 0
     }
   },
-  "timestamp": "2026-08-11T01:16:39.055751"
+  "timestamp": "2026-08-10T18:42:33.743948"
 }
